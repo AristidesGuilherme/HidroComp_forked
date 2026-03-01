@@ -8,3 +8,4 @@ scipy>=1.7
 six==1.15.*
 statsmodels>=0.14
 numpy>=1.21
+nbformat>=4.2.0

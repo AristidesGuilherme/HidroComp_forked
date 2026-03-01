@@ -10,8 +10,8 @@ import calendar as ca
 import numpy as np
 import pandas as pd
 from hidrocomp.files.fileRead import FileRead
-from hydro_api.ana.hidro import Stations, SerieTemporal
-from hydro_api.ana.sar import Reservoirs
+#from hydro_api.ana.hidro import Stations, SerieTemporal
+#from hydro_api.ana.sar import Reservoirs
 
 
 class Ana(FileRead):

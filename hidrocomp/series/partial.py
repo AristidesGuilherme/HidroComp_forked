@@ -46,7 +46,7 @@ class Partial(object):
         elif self.type_criterion == 'autocorrelation':
             self.duration = kwargs['duration']
         elif self.type_criterion == "wrc":
-            self.duration = kwargs['duration']
+            self.duration = kwargs['duration']   
         elif self.type_criterion == 'duration':
             self.duration = kwargs['duration']
 
@@ -160,12 +160,12 @@ class Partial(object):
                       }
         events = self.__period_events(data=data, station=self.station)
         for i in events.index:
-            start = events["Start"][i]
-            end = events["Finish"][i]
+            start = events["Start"].loc[i]  #add loc
+            end = events["Finish"].loc[i]  #add loc
             duration = (end - start)
             if self.type_event == "flood":
-                peaks = data[start:end].max()[0]
-                date_peak = data[start:end].idxmax()[0]
+                peaks = data[start:end].max().iloc[0]  #add iloc
+                date_peak = data[start:end].idxmax().iloc[0] #add iloc
             else:
                 peaks = data[start:end].min()[0]
                 date_peak = data[start:end].idxmin()[0]
@@ -526,9 +526,19 @@ class Partial(object):
         return df_julian
 
     # TODO Rename of spells
-    def plot_distribution(self, title, function_type, save=False):
-        parameter = self.dist_gpa.parameter
-        genpareto = GenPareto(title, shape=parameter["shape"], location=parameter["loc"], scale=parameter["scale"])
+    def plot_distribution(self, title, function_type, estimador, save=False):
+        
+        dist = Gpa(data=self.information['Peaks'])
+        if estimador == 'MML':
+            shape, loc, scale = dist.mml()
+
+        elif estimador == 'MVS':
+            shape, loc, scale= dist.mvs()
+        else:
+            raise ValueError(f'Estimador não disponível: {estimador}')
+
+        #parameter = self.dist_gpa.parameter
+        genpareto = GenPareto(title, shape, loc, scale )
         data, fig = genpareto.plot(function_type)
         if save:
             aux_name = title.replace(' ', '_')
