@@ -10,15 +10,17 @@ class Gpa(StatsBuild):
 
     name = 'GPA'
     estimator = None
-    parameter = {'shape': None, 'loc': None, 'scale': None}
+    #parameter = {'shape': None, 'loc': None, 'scale': None}  removing 
 
     def __init__(self, data=None,  shape=None, loc=None, scale=None):
         self.shape = shape
         self.loc = loc
         self.scale = scale
-        self.parameter['shape'] = self.shape
-        self.parameter['loc'] = self.loc
-        self.parameter['scale'] = self.scale
+
+        self.parameter = {'shape': self.shape, 'loc': self.loc, 'scale': self.scale} #add atribute for instance
+        #self.parameter['shape'] = self.shape
+        #self.parameter['loc'] = self.loc
+        #self.parameter['scale'] = self.scale
         super().__init__(data, shape, loc, scale)
         try:
             self.dist = genpareto(c=self.shape, loc=self.loc, scale=self.scale)
@@ -35,6 +37,11 @@ class Gpa(StatsBuild):
         self.scale = mml['scale']
         self.dist = genpareto(c=self.shape, loc=self.loc, scale=self.scale)
 
+        #update parameter
+        self.parameter['shape'] = self.shape
+        self.parameter['loc'] = self.loc
+        self.parameter['scale'] = self.scale
+
         return self.shape, self.loc, self.scale
 
     def mvs(self):
@@ -46,5 +53,10 @@ class Gpa(StatsBuild):
         self.loc = mvs[1]
         self.scale = mvs[2]
         self.dist = genpareto(c=self.shape, loc=self.loc, scale=self.scale)
+
+        #update parameter
+        self.parameter['shape'] = self.shape
+        self.parameter['loc'] = self.loc
+        self.parameter['scale'] = self.scale
 
         return self.shape, self.loc, self.scale

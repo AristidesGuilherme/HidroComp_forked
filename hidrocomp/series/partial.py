@@ -56,8 +56,8 @@ class Partial(object):
         else:
             self.name = '%s(%s)' % (self.dic_name[self.type_threshold], self.value)
 
-        if self.__information is not None:
-            self.dist_gpa = Gpa(data=self.information["Peaks"])
+        #if self.__information is not None:
+        self.dist_gpa = Gpa(data=self.information["Peaks"]) #criated atribute with instance of Gpa
 
     def __str__(self) -> str:
         return self.__information.__str__()
@@ -527,18 +527,18 @@ class Partial(object):
 
     # TODO Rename of spells
     def plot_distribution(self, title, function_type, estimador, save=False):
-        
-        dist = Gpa(data=self.information['Peaks'])
+
         if estimador == 'MML':
-            shape, loc, scale = dist.mml()
+            self.dist_gpa.mml()
 
         elif estimador == 'MVS':
-            shape, loc, scale= dist.mvs()
+            self.dist_gpa.mvs()
         else:
             raise ValueError(f'Estimador não disponível: {estimador}')
+     
+        parameter = self.dist_gpa.parameter
 
-        #parameter = self.dist_gpa.parameter
-        genpareto = GenPareto(title, shape, loc, scale )
+        genpareto = GenPareto(title, shape=parameter["shape"], location=parameter["loc"], scale=parameter["scale"])
         data, fig = genpareto.plot(function_type)
         if save:
             aux_name = title.replace(' ', '_')

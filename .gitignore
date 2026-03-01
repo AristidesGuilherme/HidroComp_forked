@@ -14,4 +14,4 @@ hydrocomp.egg-info/
 build/
 node_modules/
 hidrocomp.egg-info/
-*.amb_virtual/
+amb_virtual/
