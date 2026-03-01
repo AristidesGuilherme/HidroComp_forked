@@ -3,7 +3,8 @@ pandas>=0.25
 colorlover==0.3.*
 plotly>=4.6.0
 pytz==2020.1
-pyzmq==19.0.*
-scipy==1.5.*
+pyzmq>=19.0
+scipy>=1.7
 six==1.15.*
-statsmodels==0.12.*
+statsmodels>=0.14
+numpy>=1.21
