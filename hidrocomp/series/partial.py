@@ -386,7 +386,7 @@ class Partial(object):
             self.dist_gpa.mvs()
 
         p = self.dist_gpa.probs(magnitude)
-        return 1 / (1 - p)
+        return 1 / (1 - p)  #atenção para esse método, usa sempre mu=1, assume ocorrênica de 1 evento por ano
 
     def number_start_month_year_hydrological(self) -> int:
         if self.type_event == 'flood':
